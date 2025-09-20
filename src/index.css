@@ -1,0 +1,97 @@
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&family=Slabo+27px&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@theme {
+  --bg-gradient-dark: radial-gradient(at 56% 69%, #030637 0px, transparent 50%),
+    radial-gradient(at 10% 26%, #3c0753 0px, transparent 50%),
+    radial-gradient(at 18% 11%, #720455 0px, transparent 50%),
+    radial-gradient(at 46% 92%, #910a67 0px, transparent 50%), #030637;
+
+  --color-background: #ffffff; /* white */
+  --color-foreground: #0f172a; /* slate-900 */
+
+  --color-primary: #2563eb; /* blue-600 */
+  --color-primary-foreground: #f8fafc; /* near-white */
+
+  --color-secondary: #f1f5f9; /* slate-100 */
+  --color-secondary-foreground: #0f172a; /* slate-900 */
+
+  --color-muted: #f1f5f9; /* slate-100 */
+  --color-muted-foreground: #64748b; /* slate-500 */
+
+  --color-destructive: #ef4444; /* red-500 */
+  --color-destructive-foreground: #f8fafc; /* near-white */
+
+  --color-border: #e2e8f0; /* slate-200 */
+  --color-input: #e2e8f0; /* slate-200 */
+  --color-ring: #020617; /* slate-950 */
+
+  --color-accent: #059669; /* emerald-600 */
+  --color-accent-foreground: #f8fafc; /* near-white */
+
+  --color-bright: #facc15; /* yellow-400 */
+  --color-bright-foreground: #0f172a; /* slate-900 */
+}
+
+.dark {
+  --bg-gradient-dark: radial-gradient(at 56% 69%, #030637 0px, transparent 50%),
+    radial-gradient(at 10% 26%, #3c0753 0px, transparent 50%),
+    radial-gradient(at 18% 11%, #720455 0px, transparent 50%),
+    radial-gradient(at 46% 92%, #910a67 0px, transparent 50%), #030637;
+  --color-background: #0f172a; /* slate-900 */
+  --color-foreground: #f8fafc; /* near-white */
+
+  --color-primary: #3b82f6; /* blue-500 (lighter in dark mode) */
+  --color-primary-foreground: #0f172a; /* slate-900 */
+
+  --color-secondary: #1e293b; /* slate-800 */
+  --color-secondary-foreground: #f8fafc; /* near-white */
+
+  --color-muted: #1e293b; /* slate-800 */
+  --color-muted-foreground: #94a3b8; /* slate-400 */
+
+  --color-destructive: #991b1b; /* red-800 (darker red) */
+  --color-destructive-foreground: #f8fafc; /* near-white */
+
+  --color-border: #1e293b; /* slate-800 */
+  --color-input: #1e293b; /* slate-800 */
+  --color-ring: #cbd5e1; /* slate-300 */
+
+  --color-accent: #10b981; /* emerald-500 */
+  --color-accent-foreground: #0f172a; /* slate-900 */
+
+  --color-bright: #fde047; /* yellow-300, brighter pop */
+  --color-bright-foreground: #0f172a; /* slate-900 */
+}
+
+@layer base {
+  input:-webkit-autofill,
+  textarea:-webkit-autofill,
+  select:-webkit-autofill {
+    transition: background-color 9999s ease-in-out 0s;
+    -webkit-text-fill-color: var(--color-foreground) !important;
+    box-shadow: 0 0 0px 1000px var(--color-background) inset !important;
+  }
+}
+
+body {
+  background: var(--color-background);
+  background-image: var(--bg-gradient-dark);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  color: var(--color-foreground);
+  font-family: "Source Sans 3", Arial, Helvetica, sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--color-foreground);
+  font-family: "Slabo", "IBM Plex Sans", sans-serif;
+}

@@ -1,33 +1,30 @@
-'use client'
-import { signInAction, signInWithGoogle } from '@/app/actions/auth';
-import { createClient } from '@/utils/supabase/client'
-import { useRouter } from 'next/navigation'
-import googleIcon from '@/public/google-icon.svg'
-import Image from 'next/image';
+import googleIcon from '../../assets/google-icon.svg'
+import { useAuth } from '../../context/AuthContext';
+import { supabase } from '../../supabaseClient';
+import { useNavigate } from 'react-router';
+import type { FormEvent } from 'react';
 
 export default function LoginPage() {
-    const router = useRouter()
-    const supabase = createClient()
+    const { signInWithGoogle } = useAuth()
+    const navigate = useNavigate()
 
-    const handleGoogleLogin = async () => {
-        await supabase.auth.signInWithOAuth({
-            provider: 'google',
-            options: {
-                queryParams: {
-                    access_type: 'offline',
-                    prompt: 'consent',
-                },
-                redirectTo: `${location.origin}/auth/callback`
-            },
-        })
+    const signInAction = async (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+
+        const formData = new FormData(e.currentTarget)
+        const data = {
+            email: formData.get('email') as string,
+            password: formData.get('password') as string,
+        }
+
+        const { error } = await supabase.auth.signInWithPassword(data)
+
+        if (error) {
+            alert(error)
+            navigate('/login')
+        }
+        navigate('/')
     }
-
-    // const handleEmailLogin = async (e: React.FormEvent<HTMLFormElement>) => {
-    //     e.preventDefault()
-    //     const email = (e.currentTarget.elements.namedItem('email') as HTMLInputElement).value
-    //     const { error } = await supabase.auth.signInWithOtp({ email })
-    //     if (!error) alert('Check your email for the login link!')
-    // }
 
     return (
         <div className="flex flex-col items-center justify-center min-h-screen">
@@ -35,7 +32,7 @@ export default function LoginPage() {
             <div className='w-full max-w-md rounded-xl bg-indigo-50 dark:bg-gray-500/10 bg-clip-padding backdrop-filter  backdrop-blur bg-opacity-10 backdrop-saturate-100 backdrop-contrast-100 p-8 md:px-12 py-20 flex flex-col'>
                 <h1 className="font-mono text-2xl font-bold text-center">Welcome to Expense Tracker</h1>
                 <p className='text-center'>Sign in to your account</p>
-                <form action={signInAction} className="flex flex-col gap-4 mt-8">
+                <form onSubmit={signInAction} className="flex flex-col gap-4 mt-8">
                     <input
                         type="email"
                         name="email"
@@ -55,14 +52,13 @@ export default function LoginPage() {
 
                 <p className='text-center'>or</p>
                 <button
-                    onClick={handleGoogleLogin}
+                    onClick={signInWithGoogle}
                     className="bg-foreground text-background px-4 py-2 rounded-md flex items-center justify-center gap-2"
                 >
-                    <Image
+                    <img
                         src={googleIcon}
-                        priority
                         fetchPriority="high"
-                        alt="Payd Logo"
+                        alt="Google Icon"
                         className="w-4 h-4"
                     />
                     Continue with Google

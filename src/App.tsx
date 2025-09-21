@@ -1,41 +1,32 @@
 import './index.css'
-import { Routes, Route } from 'react-router-dom'
-import { useState, useEffect } from 'react'
-import { createClient } from '@supabase/supabase-js'
-import { Auth } from '@supabase/auth-ui-react'
-import { ThemeSupa } from '@supabase/auth-ui-shared'
-import LoginPage from './pages/(auth)/login/page'
+import { Routes, Route, Navigate, BrowserRouter } from 'react-router-dom'
+import { type JSX } from 'react'
+import LoginPage from './pages/login/page'
 import DashboardPage from './pages/dashboard/page'
+import SignUpPage from './pages/signup/page'
+import { useAuth } from './context/AuthContext'
 
-const supabase = createClient('https://<project>.supabase.co', '<sb_publishable_... or anon key>')
+function PrivateRoute({ children }: { children: JSX.Element }) {
+  const { user } = useAuth();
+  return user ? children : <Navigate to="/login" />;
+}
 
 export default function App() {
-  const [session, setSession] = useState(null)
-
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session)
-    })
-
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session)
-    })
-
-    return () => subscription.unsubscribe()
-  }, [])
-
-  if (!session) {
-    return (<Auth supabaseClient={supabase} appearance={{ theme: ThemeSupa }} />)
-  }
-  else {
-    return (
-
+  return (
+    <BrowserRouter>
       <Routes>
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/about" element={<DashboardPage />} />
+        <Route
+          path="/"
+          element={
+            <PrivateRoute>
+              <DashboardPage />
+            </PrivateRoute>
+          }
+        />
+        <Route path="*" element={<Navigate to="/login" />} />
+        <Route path="/signup" element={<SignUpPage />} />
       </Routes>
-    )
-  }
+    </BrowserRouter>
+  )
 }

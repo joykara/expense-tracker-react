@@ -13,19 +13,25 @@ const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const [user, setUser] = useState<any>(null);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         // Fetch initial session
         const fetchSession = async () => {
             const { data } = await supabase.auth.getSession();
             setUser(data.session?.user ?? null);
+            setLoading(false);
         };
         fetchSession();
 
         // Listen for auth state changes
-        const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
+        const { data: listener } = supabase.auth.onAuthStateChange((event, session) => {
+            console.log("Auth event:", event);
+            console.log("Session:", session);
             setUser(session?.user ?? null);
+            setLoading(false);
         });
+
 
         return () => {
             listener?.subscription?.unsubscribe();
@@ -33,11 +39,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }, []);
 
     const signInWithGoogle = async () => {
+        console.log('signInWithGoogle triggered')
         await supabase.auth.signInWithOAuth({
             provider: "google",
             options: {
-                redirectTo: `${process.env.VITE_PUBLIC_BASE_URL}/auth/callback`,
-            },
+                redirectTo: `${window.location.origin}/`
+            }
         });
     };
 
@@ -47,7 +54,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     return (
         <AuthContext.Provider value={{ user, signInWithGoogle, signOut }}>
-            {children}
+            {!loading && children}
         </AuthContext.Provider>
     );
 };

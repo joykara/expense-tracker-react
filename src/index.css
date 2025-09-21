@@ -95,3 +95,8 @@ h6 {
   color: var(--color-foreground);
   font-family: "Slabo", "IBM Plex Sans", sans-serif;
 }
+
+input {
+  background: var(--color-background);
+  color: var(--color-foreground);
+}

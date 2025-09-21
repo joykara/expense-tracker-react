@@ -5,28 +5,33 @@ import LoginPage from './pages/login/page'
 import DashboardPage from './pages/dashboard/page'
 import SignUpPage from './pages/signup/page'
 import { useAuth } from './context/AuthContext'
+import ThemeToggle from './components/ThemeToggle'
 
 function PrivateRoute({ children }: { children: JSX.Element }) {
   const { user } = useAuth();
-  return user ? children : <Navigate to="/login" />;
+  if (!user) return <Navigate to="/login" replace />;
+  return children;
 }
 
 export default function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/login" element={<LoginPage />} />
-        <Route
-          path="/"
-          element={
-            <PrivateRoute>
-              <DashboardPage />
-            </PrivateRoute>
-          }
-        />
-        <Route path="*" element={<Navigate to="/login" />} />
-        <Route path="/signup" element={<SignUpPage />} />
-      </Routes>
+      <div className="min-h-screen">
+        <ThemeToggle />
+        <Routes>
+          <Route path="/login" element={<LoginPage />} />
+          <Route
+            path="/"
+            element={
+              <PrivateRoute>
+                <DashboardPage />
+              </PrivateRoute>
+            }
+          />
+          <Route path="*" element={<Navigate to="/login" />} />
+          <Route path="/signup" element={<SignUpPage />} />
+        </Routes>
+      </div>
     </BrowserRouter>
   )
 }

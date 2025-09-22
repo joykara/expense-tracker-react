@@ -118,16 +118,16 @@ Supabase manages users, sessions, and OAuth (Google).
 **Phase 1 – Setup**
 
 * [x] Create Next.js + Tailwind project
-* [ ] Set up Supabase project + DB schema
-* [ ] Add Supabase Auth (Email + Google OAuth)
-* [ ] Add signup & login pages
+* [x] Set up Supabase project + DB schema
+* [x] Add Supabase Auth (Email + Google OAuth)
+* [x] Add signup & login pages
 
 **Phase 2 – Core Features**
 
-* [ ] Add dashboard page (protected route)
-* [ ] Build `AddExpenseForm` component
-* [ ] Display expense list
-* [ ] Connect TanStack Query for fetching/mutations
+* [x] Add dashboard page (protected route)
+* [x] Build `AddExpenseForm` component
+* [x] Display expense list
+* [x] Connect TanStack Query for fetching/mutations
 
 **Phase 3 – Enhancements**
 

@@ -117,7 +117,7 @@ Supabase manages users, sessions, and OAuth (Google).
 
 **Phase 1 – Setup**
 
-* [ ] Create Next.js + Tailwind project
+* [x] Create Next.js + Tailwind project
 * [ ] Set up Supabase project + DB schema
 * [ ] Add Supabase Auth (Email + Google OAuth)
 * [ ] Add signup & login pages

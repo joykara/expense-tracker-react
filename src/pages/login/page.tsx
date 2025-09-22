@@ -3,6 +3,7 @@ import { useAuth } from '../../context/AuthContext';
 import { supabase } from '../../supabaseClient';
 import { useNavigate } from 'react-router';
 import type { FormEvent } from 'react';
+import toast from 'react-hot-toast';
 
 export default function LoginPage() {
     const { signInWithGoogle } = useAuth()
@@ -20,9 +21,10 @@ export default function LoginPage() {
         const { error } = await supabase.auth.signInWithPassword(data)
 
         if (error) {
-            alert(error)
+            toast.error(error.message)
             navigate('/login')
         }
+        toast.success('Welcome back!')
         navigate('/')
     }
 

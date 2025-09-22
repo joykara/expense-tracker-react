@@ -1,5 +1,6 @@
 import { supabase } from '../../supabaseClient';
 import type { FormEvent } from "react";
+import toast from 'react-hot-toast';
 import { useNavigate } from "react-router";
 
 export default function SignUpPage() {
@@ -9,30 +10,43 @@ export default function SignUpPage() {
         e.preventDefault();
 
         const formData = new FormData(e.currentTarget);
+        const email = formData.get('email') as string;
+        const password = formData.get('password') as string;
+        const fullName = formData.get('full_name') as string;
 
         const { data: authData, error } = await supabase.auth.signUp({
-            email: formData.get('email') as string,
-            password: formData.get('password') as string,
+            email,
+            password,
             options: {
                 data: {
-                    full_name: formData.get('full_name') as string,
-                }
-            }
-        })
-
-        if (!error && authData?.user) {
-            await supabase.from('profiles').insert({
-                id: authData.user.id, // same as user.id
-                full_name: formData.get('full_name') as string,
-            })
-        }
+                    full_name: fullName,
+                },
+                emailRedirectTo: 'http://localhost:5173/auth/callback'
+            },
+        });
 
         if (error) {
-            alert(error)
-            navigate('/login')
+            toast.error(error.message);
+            return; // Don't continue
         }
-        navigate('/')
-    }
+
+        // Show notice if user needs to verify email
+        if (authData?.user && !authData.session) {
+            toast.success(`Verification email sent to ${email}. Please confirm to continue.`);
+            return;
+        }
+
+        if (authData?.user && authData.session) {
+            await supabase.from('profiles').insert({
+                id: authData.user.id,
+                full_name: fullName,
+            });
+
+            toast.success('Account created and logged in!');
+            navigate('/');
+        }
+    };
+
 
     return (
         <div className="flex flex-col items-center justify-center min-h-screen">

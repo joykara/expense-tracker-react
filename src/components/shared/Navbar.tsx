@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -8,8 +7,8 @@ import {
     DropdownMenuLabel,
     DropdownMenuSeparator,
     DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { ModeToggle } from "@/components/mode-toggle" // your theme switcher
+} from "../ui/dropdown-menu"
+import ModeToggle from "../mode-toggle" // your theme switcher
 import { supabase } from "../../supabaseClient"
 import { useAuth } from "../../context/AuthContext"
 
@@ -46,7 +45,7 @@ export function Navbar() {
     return (
         <header className="flex items-center justify-between px-6 py-4 shadow-sm border-b">
             {/* Left side */}
-            <div className="text-xl font-bold">💸 Expense Tracker</div>
+            <div className="text-xl font-serif font-semibold">Expense Tracker</div>
 
             {/* Right side */}
             <div className="flex items-center gap-4">

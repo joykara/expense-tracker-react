@@ -1,5 +1,6 @@
 import ExpenseForm from '../../components/AddExpenseForm';
 import ExpenseList from '../../components/ExpenseList';
+import { Navbar } from '../../components/shared/Navbar';
 import { useAuth } from '../../context/AuthContext';
 
 export default function DashboardPage() {
@@ -7,6 +8,7 @@ export default function DashboardPage() {
 
     return (
         <div className="flex flex-col min-h-screen">
+            <Navbar />
             <div className='w-full flex items-center justify-between py-2 px-4 mb-4'>
                 <h1 className="text-2xl">Dashboard</h1>
                 <div className='mr-8 flex gap-4'>

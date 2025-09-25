@@ -23,7 +23,7 @@ The app lets users sign up, log in (with email + Google), add expenses, categori
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 * **Frontend**: Next.js (App Router) + Tailwind CSS
 * **Auth**: Supabase Auth (email + Google OAuth) [https://supabase.com/docs/guides/auth/server-side/nextjs]
@@ -39,7 +39,7 @@ The app lets users sign up, log in (with email + Google), add expenses, categori
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 ```
 expense-tracker/
@@ -58,7 +58,7 @@ expense-tracker/
 
 ---
 
-## 🔑 Authentication (Supabase Auth)
+## Authentication (Supabase Auth)
 
 Supabase manages users, sessions, and OAuth (Google).
 
@@ -70,7 +70,7 @@ Supabase manages users, sessions, and OAuth (Google).
 
 ---
 
-## 📊 Database Schema (Supabase)
+## Database Schema (Supabase)
 
 **users**
 
@@ -90,7 +90,7 @@ Supabase manages users, sessions, and OAuth (Google).
 
 ---
 
-## 🧪 Testing Plan
+## Testing Plan
 
 ### Unit Tests
 
@@ -113,7 +113,7 @@ Supabase manages users, sessions, and OAuth (Google).
 
 ---
 
-## 📌 Roadmap / Progress Tracker
+## Roadmap / Progress Tracker
 
 **Phase 1 – Setup**
 
@@ -150,7 +150,7 @@ Supabase manages users, sessions, and OAuth (Google).
 
 ---
 
-## 📦 Installation & Running Locally
+## Installation & Running Locally
 
 ```bash
 # 1. Clone repo
@@ -172,10 +172,11 @@ npm run dev
 ## 🔑 Environment Variables
 
 ```env
-NEXT_PUBLIC_SUPABASE_URL=<your_supabase_project_url>
-NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=<sb_publishable_... or anon keyY>
-SUPABASE_SERVICE_ROLE_KEY=xxxx
+VITE_SUPABASE_URL=<your_supabase_project_url>
+VITE_SUPABASE_PUBLISHABLE_KEY=<sb_publishable_... or anon keyY>
+VITE_GOOGLE_CLIENT_ID=<google client id>
 SUPABASE_AUTH_EXTERNAL_GOOGLE_CLIENT_SECRET="<client-secret>"
+VITE_PUBLIC_BASE_URL
 ```
 
 ---

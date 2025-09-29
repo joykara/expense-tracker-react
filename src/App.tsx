@@ -5,7 +5,6 @@ import LoginPage from './pages/login/page'
 import DashboardPage from './pages/dashboard/page'
 import SignUpPage from './pages/signup/page'
 import { useAuth } from './context/AuthContext'
-import ThemeToggle from './components/ThemeToggle'
 import { Toaster } from 'react-hot-toast'
 import AuthCallbackPage from './pages/callback/page'
 
@@ -19,7 +18,6 @@ export default function App() {
   return (
     <BrowserRouter>
       <div className="min-h-screen">
-        <ThemeToggle />
         <Toaster position="top-right" />
         <Routes>
           <Route path="/login" element={<LoginPage />} />

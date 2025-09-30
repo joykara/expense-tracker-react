@@ -1,4 +1,5 @@
 import ExpenseForm from '../../components/AddExpenseForm';
+import { BarChart } from '../../components/BarChart';
 import ExpenseList from '../../components/ExpenseList';
 import { Navbar } from '../../components/shared/Navbar';
 import { useAuth } from '../../context/AuthContext';
@@ -22,6 +23,7 @@ export default function DashboardPage() {
             </div>
             {user && <p>Welcome, {user.email}</p>}
             <ExpenseList />
+            <BarChart />
             <ExpenseForm />
         </div>
     )

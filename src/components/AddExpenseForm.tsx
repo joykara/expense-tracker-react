@@ -36,7 +36,6 @@ export default function ExpenseForm() {
 
         const { error } = await supabase.from("categories").insert([
             {
-                user_id: user?.id,
                 name: formData.get("name"),
                 color: formData.get("color"),
             },

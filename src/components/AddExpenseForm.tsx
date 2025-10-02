@@ -52,11 +52,11 @@ export default function ExpenseForm() {
     if (isLoading) return <p>Loading...</p>;
 
     return (
-        <div className="max-w-md">
+        <div className="w-full">
             {categories && categories.length === 0 || creatingCategory ? (
                 <form
                     onSubmit={handleCreateCategory}
-                    className="flex flex-col gap-4 border p-4 rounded bg-muted/10"
+                    className="flex flex-col gap-4"
                 >
                     <h2 className="font-bold">Create a Category</h2>
                     <input
@@ -91,7 +91,7 @@ export default function ExpenseForm() {
             ) : (
                 <form
                     onSubmit={handleSubmitExpense}
-                    className="flex flex-col gap-4 border p-4 rounded"
+                    className="flex flex-col gap-4"
                 >
                     <h2 className="font-bold">Add Expense</h2>
                     <select name="category_id" required className="px-4 py-2 border rounded">

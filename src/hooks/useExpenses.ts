@@ -6,6 +6,7 @@ export function useCategories() {
         queryKey: ['categories'],
         queryFn: async () => {
             const { data, error } = await supabase.from("categories").select("*");
+            console.log(data, error);
             if (error) throw error;
             return data
         },

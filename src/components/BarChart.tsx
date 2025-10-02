@@ -1,9 +1,12 @@
 import { Pie } from 'react-chartjs-2'
 import { Chart as ChartJS, Tooltip, Legend, ArcElement } from 'chart.js'
+import { useCategories, useExpenses } from '../hooks/useExpenses'
 
 ChartJS.register(Tooltip, Legend, ArcElement)
 
 export const BarChart = () => {
+    const { data: categories } = useCategories()
+    const { data: expenses } = useExpenses()
     const mockCategories = [
         { id: '1', name: 'Food & Dining', color: '#FF6384' },
         { id: '2', name: 'Transportation', color: '#36A2EB' },

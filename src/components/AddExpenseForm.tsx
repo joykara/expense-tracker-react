@@ -3,11 +3,12 @@ import { supabase } from "../supabaseClient";
 import toast from "react-hot-toast";
 import { useAuth } from "../context/AuthContext";
 import { useCategories } from "../hooks/useExpenses";
+import { Navigate } from "react-router";
 
 
 export default function ExpenseForm() {
     const [creatingCategory, setCreatingCategory] = useState(false);
-    const {user} = useAuth()
+    const { user } = useAuth()
     const { data: categories, isLoading } = useCategories()
 
     const handleSubmitExpense = async (e: React.FormEvent) => {
@@ -51,6 +52,7 @@ export default function ExpenseForm() {
 
     if (isLoading) return <p>Loading...</p>;
 
+    if (!user) return <Navigate to="/login" replace />;
     return (
         <div className="w-full">
             {categories && categories.length === 0 || creatingCategory ? (

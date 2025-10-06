@@ -1,4 +1,5 @@
 import { useCategories, useExpenses } from "../hooks/useExpenses";
+import { mockCategories, mockExpenses } from "../lib/utils";
 
 type Category = {
     id: string;
@@ -8,12 +9,15 @@ type Category = {
 
 
 export default function ExpenseList() {
-    const { data: categories } = useCategories()
-    const { data: expenses } = useExpenses()
+    const { data: actualCategories } = useCategories()
+    const { data: actualExpenses } = useExpenses()
+
+    const expenses = actualExpenses && actualExpenses?.length > 0 ? actualExpenses : mockExpenses
+    const categories = actualCategories && actualCategories?.length > 0 ? actualCategories : mockCategories
     const getCategoryById = (id: string | null) => categories?.find((cat: Category) => cat.id === id);
 
     return (
-        <table className="w-full text-left border-collapse">
+        <table className="w-full text-left border">
             <thead>
                 <tr className="border-b">
                     <th className="p-2">Date</th>
@@ -32,7 +36,7 @@ export default function ExpenseList() {
                                 <td className="p-2">
                                     <span
                                         className="inline-block rounded px-2 py-1 text-sm"
-                                        style={{ backgroundColor: category?.color || "#ccc" }}
+                                        style={{ backgroundColor: category?.color }}
                                     >
                                         {category?.name}
                                     </span>

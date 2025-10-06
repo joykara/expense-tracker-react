@@ -11,6 +11,7 @@ import {
 import ModeToggle from "../mode-toggle" // your theme switcher
 import { supabase } from "../../supabaseClient"
 import { useAuth } from "../../context/AuthContext"
+import { useNavigate } from "react-router"
 
 interface Profile {
     id: string
@@ -20,6 +21,7 @@ interface Profile {
 
 export function Navbar() {
     const { user, signOut } = useAuth();
+    const navigate = useNavigate();
     const [profile, setProfile] = useState<Profile | null>(null)
 
     useEffect(() => {
@@ -69,9 +71,14 @@ export function Navbar() {
                         <DropdownMenuSeparator />
                         <DropdownMenuItem>Profile</DropdownMenuItem>
                         <DropdownMenuItem>Settings</DropdownMenuItem>
-                        <DropdownMenuItem onClick={signOut}>
+                        {user ?(<DropdownMenuItem onClick={signOut}>
                             Logout
                         </DropdownMenuItem>
+                        ) : (
+                            <DropdownMenuItem onClick={()=> navigate('/login')}>
+                                Login
+                            </DropdownMenuItem>
+                        )}
                     </DropdownMenuContent>
                 </DropdownMenu>
             </div>

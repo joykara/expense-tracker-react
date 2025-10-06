@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import ExpenseForm from '../../components/AddExpenseForm';
-import { BarChart } from '../../components/BarChart';
+import { BarChart } from '../../components/PieChart';
 import ExpenseList from '../../components/ExpenseList';
 import { Navbar } from '../../components/shared/Navbar';
 import { useAuth } from '../../context/AuthContext';
@@ -21,7 +21,7 @@ export default function DashboardPage() {
                 <div className='mr-8 flex gap-4'>
                     <button
                         onClick={toggleModal}
-                        className="text-destructive border rounded-md hover:text-white hover:bg-destructive p-2"
+                        className="bg-destructive border rounded-md hover:text-white hover:bg-destructive p-2"
                     >
                         Add Expense
                     </button>

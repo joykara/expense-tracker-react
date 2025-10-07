@@ -4,13 +4,10 @@ import { type JSX } from 'react'
 import LoginPage from './pages/login/page'
 import DashboardPage from './pages/dashboard/page'
 import SignUpPage from './pages/signup/page'
-import { useAuth } from './context/AuthContext'
 import { Toaster } from 'react-hot-toast'
 import AuthCallbackPage from './pages/callback/page'
 
 function PrivateRoute({ children }: { children: JSX.Element }) {
-  const { user } = useAuth();
-  if (!user) return <Navigate to="/login" replace />;
   return children;
 }
 

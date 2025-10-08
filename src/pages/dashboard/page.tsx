@@ -14,20 +14,20 @@ export default function DashboardPage() {
         setIsOpen(!isOpen);
     }
     return (
-        <div className="flex flex-col min-h-screen">
+        <div className="flex flex-col min-h-screen bg-background text-foreground">
             <Navbar />
-            <div className='w-full flex items-center justify-between py-2 px-4 my-4'>
+            <div className='w-full flex items-center justify-between py-2 px-4 md:px-8 my-4'>
                 {user && <h1 className="text-base">Welcome, {user.email}</h1>}
                 <div className='mr-8 flex gap-4'>
                     <button
                         onClick={toggleModal}
-                        className="bg-destructive border rounded-md hover:text-white hover:bg-destructive p-2"
+                        className="bg-destructive border rounded-md text-white p-2 text-sm 2xl:text-base"
                     >
                         Add Expense
                     </button>
                 </div>
             </div>
-            <div className='grid grid-cols-1 md:grid-cols-2 gap-4 px-4'>
+            <div className='grid grid-cols-1 md:grid-cols-2 gap-4 px-4 md:px-8'>
                 <ExpenseList />
                 <BarChart />
             </div>

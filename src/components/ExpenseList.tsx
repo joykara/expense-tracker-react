@@ -26,12 +26,12 @@ export default function ExpenseList() {
                     <th className="p-2">Amount</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody className="divide-y w-full">
                 {expenses ? (
                     expenses.map((exp) => {
                         const category = getCategoryById(exp.category_id)
                         return (
-                            <tr key={exp.id} className="border-b hover:bg-muted/30">
+                            <tr key={exp.id} className="border-b hover:bg-muted/30 w-full h-fit">
                                 <td className="p-2">{exp.date}</td>
                                 <td className="p-2">
                                     <span
@@ -42,7 +42,7 @@ export default function ExpenseList() {
                                     </span>
                                 </td>
                                 <td className="p-2">{exp.description}</td>
-                                <td className="p-2 font-bold">${exp.amount}</td>
+                                <td className="p-2 font-bold">KES {exp.amount}</td>
                             </tr>
                         )
                     })

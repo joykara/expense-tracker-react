@@ -55,7 +55,7 @@ export default function ExpenseForm() {
     if (!user) return <Navigate to="/login" replace />;
     return (
         <div className="w-full">
-            {categories && categories.length === 0 || creatingCategory ? (
+            {/* {categories && categories.length === 0 || creatingCategory ? (
                 <form
                     onSubmit={handleCreateCategory}
                     className="flex flex-col gap-4"
@@ -90,7 +90,7 @@ export default function ExpenseForm() {
                         </button>
                     )}
                 </form>
-            ) : (
+            ) : ( */}
                 <form
                     onSubmit={handleSubmitExpense}
                     className="flex flex-col gap-4"
@@ -130,15 +130,15 @@ export default function ExpenseForm() {
                     >
                         Add Expense
                     </button>
-                    <button
+                    {/* <button
                         type="button"
                         onClick={() => setCreatingCategory(true)}
                         className="text-sm underline mt-2"
                     >
                         + Create new category
-                    </button>
+                    </button> */}
                 </form>
-            )}
+            {/* )} */}
         </div>
     );
 }

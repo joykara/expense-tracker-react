@@ -7,49 +7,59 @@ type Category = {
     color: string;
 };
 
+type Expense = {
+    id: string;
+    date: string;
+    category_id: string;
+    description: string;
+    amount: number;
+};
+
+function groupByDate(expenses: Expense[]) {
+    return expenses.reduce((acc, exp) => {
+        (acc[exp.date] = acc[exp.date] || []).push(exp);
+        return acc;
+    }, {} as Record<string, Expense[]>);
+}
 
 export default function ExpenseList() {
-    const { data: actualCategories } = useCategories()
-    const { data: actualExpenses } = useExpenses()
+    const { data: actualCategories } = useCategories();
+    const { data: actualExpenses } = useExpenses();
 
-    const expenses = actualExpenses && actualExpenses?.length > 0 ? actualExpenses : mockExpenses
-    const categories = actualCategories && actualCategories?.length > 0 ? actualCategories : mockCategories
+    const expenses = actualExpenses && actualExpenses.length > 0 ? actualExpenses : mockExpenses;
+    const categories = actualCategories && actualCategories.length > 0 ? actualCategories : mockCategories;
     const getCategoryById = (id: string | null) => categories?.find((cat: Category) => cat.id === id);
 
+    if (!expenses || expenses.length === 0) {
+        return <p>Track your first expense</p>;
+    }
+
+    const grouped = groupByDate(expenses);
+
     return (
-        <table className="w-full text-left border">
-            <thead>
-                <tr className="border-b">
-                    <th className="p-2">Date</th>
-                    <th className="p-2">Category</th>
-                    <th className="p-2">Description</th>
-                    <th className="p-2">Amount</th>
-                </tr>
-            </thead>
-            <tbody className="divide-y w-full">
-                {expenses ? (
-                    expenses.map((exp) => {
-                        const category = getCategoryById(exp.category_id)
-                        return (
-                            <tr key={exp.id} className="border-b hover:bg-muted/30 w-full h-fit">
-                                <td className="p-2">{exp.date}</td>
-                                <td className="p-2">
+        <div className="space-y-8">
+            {Object.entries(grouped).map(([date, dayExpenses]) => (
+                <div key={date}>
+                    <div className="bg-muted px-4 py-2 rounded font-semibold text-lg mb-2">{date}</div>
+                    <div className="space-y-2">
+                        {dayExpenses.map((exp) => {
+                            const category = getCategoryById(exp.category_id);
+                            return (
+                                <div key={exp.id} className="flex items-center gap-4 bg-background border rounded-lg shadow p-3">
                                     <span
                                         className="inline-block rounded px-2 py-1 text-sm"
-                                        style={{ backgroundColor: category?.color }}
+                                        style={{ color: category?.color, border: `1px solid ${category?.color}`, borderRadius: '6px' }}
                                     >
                                         {category?.name}
                                     </span>
-                                </td>
-                                <td className="p-2">{exp.description}</td>
-                                <td className="p-2 font-bold">KES {exp.amount}</td>
-                            </tr>
-                        )
-                    })
-                ) : (
-                    <p>Track your first expense</p>
-                )}
-            </tbody>
-        </table>
+                                    <span className="flex-1 text-muted-foreground">{exp.description}</span>
+                                    <span className="font-bold text-primary">KES {exp.amount}</span>
+                                </div>
+                            );
+                        })}
+                    </div>
+                </div>
+            ))}
+        </div>
     );
 }

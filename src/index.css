@@ -3,7 +3,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@theme {
+:root {
   --bg-gradient-dark: radial-gradient(at 56% 69%, #030637 0px, transparent 50%),
     radial-gradient(at 10% 26%, #3c0753 0px, transparent 50%),
     radial-gradient(at 18% 11%, #720455 0px, transparent 50%),
@@ -21,7 +21,7 @@
   --color-muted: #f1f5f9; /* slate-100 */
   --color-muted-foreground: #64748b; /* slate-500 */
 
-  --color-destructive: #ef4444; /* red-500 */
+  --color-destructive: #7f1d1d; /* red-500 */
   --color-destructive-foreground: #f8fafc; /* near-white */
 
   --color-border: #e2e8f0; /* slate-200 */
@@ -40,7 +40,7 @@
     radial-gradient(at 10% 26%, #3c0753 0px, transparent 50%),
     radial-gradient(at 18% 11%, #720455 0px, transparent 50%),
     radial-gradient(at 46% 92%, #910a67 0px, transparent 50%), #030637;
-  --color-background: #0f172a; /* slate-900 */
+  --color-background: #0e0e0e; /* slate-900 */
   --color-foreground: #f8fafc; /* near-white */
 
   --color-primary: #3b82f6; /* blue-500 (lighter in dark mode) */
@@ -52,7 +52,7 @@
   --color-muted: #1e293b; /* slate-800 */
   --color-muted-foreground: #94a3b8; /* slate-400 */
 
-  --color-destructive: #ff1a1a; /* red-800 (darker red) */
+  --color-destructive: #ff0000; /* red-800 (darker red) */
   --color-destructive-foreground: #f8fafc; /* near-white */
 
   --color-border: #1e293b; /* slate-800 */
@@ -62,7 +62,7 @@
   --color-accent: #10b981; /* emerald-500 */
   --color-accent-foreground: #0f172a; /* slate-900 */
 
-  --color-bright: #fde047; /* yellow-300, brighter pop */
+  --color-bright: #fcd928; /* yellow-300, brighter pop */
   --color-bright-foreground: #0f172a; /* slate-900 */
 }
 

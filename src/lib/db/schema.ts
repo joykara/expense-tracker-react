@@ -1,7 +1,7 @@
-import { pgTable, uuid, text, numeric, timestamp, date } from "drizzle-orm/pg-core";
+import { pgTable as table, uuid, text, numeric, timestamp, date } from "drizzle-orm/pg-core";
 
 // --- Profiles ---
-export const profiles = pgTable("profiles", {
+export const profiles = table("profiles", {
     id: uuid("id").primaryKey(),
     full_name: text("full_name"),
     avatar_nrl: text("avatar_url"),
@@ -9,7 +9,7 @@ export const profiles = pgTable("profiles", {
 });
 
 // --- Categories ---
-export const categories = pgTable("categories", {
+export const categories = table("categories", {
     id: uuid("id").primaryKey().defaultRandom(),
     name: text("name").notNull(),
     color: text("color"),
@@ -17,7 +17,7 @@ export const categories = pgTable("categories", {
 });
 
 // --- Expenses ---
-export const expenses = pgTable("expenses", {
+export const expenses = table("expenses", {
     id: uuid("id").primaryKey().defaultRandom(),
     user_id: uuid("user_id").references(() => profiles.id),
     amount: numeric("amount").notNull(),
@@ -28,10 +28,10 @@ export const expenses = pgTable("expenses", {
 });
 
 // --- Budgets ---
-export const budgets = pgTable("budgets", {
+export const budgets = table("budgets", {
     id: uuid("id").primaryKey().defaultRandom(),
     user_id: uuid("user_id").references(() => profiles.id),
     month: text("month").notNull(),
-    total: numeric("total").notNull(),
+    total: numeric("total", { precision: 10, scale: 2 }).$type<number>().notNull(),
     created_at: timestamp("created_at").defaultNow(),
 });

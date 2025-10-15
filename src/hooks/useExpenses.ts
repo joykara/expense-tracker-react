@@ -36,3 +36,20 @@ export function useExpenses() {
         staleTime: 1000 * 60 * 5
     })
 }
+
+// budgets
+export function useBudgets() {
+    return useQuery({
+        queryKey: ['budgets'],
+        queryFn: async () => {
+            const { data, error } = await supabase
+                .from("budgets")
+                .select("*")
+                .order("month", { ascending: false });
+            if (error) throw error;
+            return data
+        },
+        gcTime: Infinity,
+        staleTime: 1000 * 60 * 5
+    })
+}

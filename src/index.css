@@ -12,7 +12,7 @@
   --color-background: #ffffff; /* white */
   --color-foreground: #0f172a; /* slate-900 */
 
-  --color-primary: #2563eb; /* blue-600 */
+  --color-primary: #9966FF; /* blue-600 */
   --color-primary-foreground: #f8fafc; /* near-white */
 
   --color-secondary: #f1f5f9; /* slate-100 */
@@ -43,7 +43,7 @@
   --color-background: #0e0e0e; /* slate-900 */
   --color-foreground: #f8fafc; /* near-white */
 
-  --color-primary: #3b82f6; /* blue-500 (lighter in dark mode) */
+  --color-primary: #8f49ff; /* blue-500 (lighter in dark mode) */
   --color-primary-foreground: #0f172a; /* slate-900 */
 
   --color-secondary: #1e293b; /* slate-800 */

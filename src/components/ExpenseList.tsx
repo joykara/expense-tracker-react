@@ -1,19 +1,6 @@
 import { useCategories, useExpenses } from "../hooks/useExpenses";
+import type { Category, Expense } from "../lib/types";
 import { mockCategories, mockExpenses } from "../lib/utils";
-
-type Category = {
-    id: string;
-    name: string;
-    color: string;
-};
-
-type Expense = {
-    id: string;
-    date: string;
-    category_id: string;
-    description: string;
-    amount: number;
-};
 
 function groupByDate(expenses: Expense[]) {
     return expenses.reduce((acc, exp) => {

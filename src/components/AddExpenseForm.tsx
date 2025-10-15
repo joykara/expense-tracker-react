@@ -1,13 +1,11 @@
-import { useState } from "react";
 import { supabase } from "../supabaseClient";
 import toast from "react-hot-toast";
 import { useAuth } from "../context/AuthContext";
 import { useCategories } from "../hooks/useExpenses";
 import { Navigate } from "react-router";
 
-
 export default function ExpenseForm() {
-    const [creatingCategory, setCreatingCategory] = useState(false);
+    // const [creatingCategory, setCreatingCategory] = useState(false);
     const { user } = useAuth()
     const { data: categories, isLoading } = useCategories()
 
@@ -31,24 +29,24 @@ export default function ExpenseForm() {
         }
     };
 
-    const handleCreateCategory = async (e: React.FormEvent) => {
-        e.preventDefault();
-        const formData = new FormData(e.currentTarget as HTMLFormElement);
+    // const handleCreateCategory = async (e: React.FormEvent) => {
+    //     e.preventDefault();
+    //     const formData = new FormData(e.currentTarget as HTMLFormElement);
 
-        const { error } = await supabase.from("categories").insert([
-            {
-                name: formData.get("name"),
-                color: formData.get("color"),
-            },
-        ]);
+    //     const { error } = await supabase.from("categories").insert([
+    //         {
+    //             name: formData.get("name"),
+    //             color: formData.get("color"),
+    //         },
+    //     ]);
 
-        if (error) console.error(error);
-        else {
-            toast.success("Category created!");
-            (e.target as HTMLFormElement).reset();
-            setCreatingCategory(false);
-        }
-    };
+    //     if (error) console.error(error);
+    //     else {
+    //         toast.success("Category created!");
+    //         (e.target as HTMLFormElement).reset();
+    //         setCreatingCategory(false);
+    //     }
+    // };
 
     if (isLoading) return <p>Loading...</p>;
 

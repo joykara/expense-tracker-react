@@ -45,7 +45,7 @@ export const BarChart = () => {
         },
     }
     return (
-        <div className="w-full max-w-md mx-auto">
+        <div className="w-full max-w-md mx-auto max-h-100">
             <Pie options={options} data={data} />
         </div>
     )

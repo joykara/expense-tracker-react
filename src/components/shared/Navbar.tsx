@@ -45,7 +45,7 @@ export function Navbar() {
     }, [])
 
     return (
-        <header className="flex items-center justify-between px-6 py-4 shadow-sm dark:border-white border-b/70">
+        <header className="flex items-center justify-between px-6 py-4 shadow-sm bg-primary-foreground/30 dark:border-white border-b/70">
             {/* Left side */}
             <div className="text-xl font-serif font-semibold">Expense Tracker</div>
 
@@ -69,7 +69,6 @@ export function Navbar() {
                             {profile?.full_name || user?.email || "Anonymous"}
                         </DropdownMenuLabel>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem>Profile</DropdownMenuItem>
                         <DropdownMenuItem>Settings</DropdownMenuItem>
                         {user ?(<DropdownMenuItem onClick={signOut}>
                             Logout

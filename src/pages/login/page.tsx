@@ -4,6 +4,8 @@ import { supabase } from '../../supabaseClient';
 import { useNavigate } from 'react-router';
 import type { FormEvent } from 'react';
 import toast from 'react-hot-toast';
+import GrainOverlay from '../../components/shared/grainOverly';
+import { MailCheckIcon } from '../../components/ui/mail-check';
 
 export default function LoginPage() {
     const { signInWithGoogle } = useAuth()
@@ -30,24 +32,27 @@ export default function LoginPage() {
 
     return (
         <div className="flex flex-col items-center justify-center min-h-screen">
-            {/* <div className="absolute top-10 left-6 blur-xl rounded-full h-30 w-30 bg-orange-300 dark:bg-orange-500"></div> */}
-            <div className='w-full max-w-md rounded-xl bg-purple-300 dark:bg-gray-500/10 bg-clip-padding backdrop-filter  backdrop-blur bg-opacity-10 backdrop-saturate-100 backdrop-contrast-100 p-8 md:px-12 py-20 flex flex-col'>
-                <h1 className="font-mono text-2xl font-bold text-center">Welcome to Expense Tracker</h1>
+            {/* Glass effect */}
+            {/* <div className='relative w-full max-w-md rounded-xl bg-purple-300 dark:bg-gray-500/10 bg-clip-padding backdrop-filter  backdrop-blur bg-opacity-10 backdrop-saturate-100 backdrop-contrast-100 p-8 md:px-12 py-20 flex flex-col'> */}
+            <div className='relative w-full max-w-md rounded-xl p-8 md:px-12 py-20 flex flex-col gap-2'>
+                <GrainOverlay />
+                <h1 className="font-mono text-2xl font-bold text-center">Welcome to <span className='text-dark-primary'>Expense Tracker</span></h1>
                 <p className='text-center'>Sign in to your account</p>
                 <form onSubmit={signInAction} className="flex flex-col gap-4 mt-8">
                     <input
                         type="email"
                         name="email"
                         placeholder="Enter email"
-                        className="px-4 py-2 rounded-md border border-secondary-foreground/10"
+                        className="px-4 py-2 rounded-md bg-primary-foreground border border-secondary-foreground/10"
                     />
                     <input
                         type="password"
                         name="password"
                         placeholder="Enter password"
-                        className="px-4 py-2 rounded-md border border-secondary-foreground/10"
+                        className="px-4 py-2 rounded-md bg-primary-foreground border border-secondary-foreground/10"
                     />
-                    <button type="submit" className="bg-primary text-white px-4 py-2 rounded">
+                    <button type="submit" className="bg-primary text-background px-4 py-2 rounded flex gap-2 justify-center items-center">
+                        <MailCheckIcon />
                         Sign in with Email
                     </button>
                 </form>
@@ -65,6 +70,12 @@ export default function LoginPage() {
                     />
                     Continue with Google
                 </button>
+                    <p className='text-center text-sm mt-0.5'>
+                        Create account?{' '}
+                        <a href="/signup" className="hover:text-light-primary text-dark-primary hover:underline">
+                            Sign up
+                        </a>
+                    </p>
             </div>
 
             {/* <form action={signInWithGoogle}>

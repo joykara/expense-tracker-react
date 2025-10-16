@@ -75,16 +75,19 @@ export default function DashboardPage() {
     return (
         <div className="flex flex-col min-h-screen text-foreground">
             <Navbar />
-            <div className='w-full flex items-center justify-between py-2 px-4 md:px-8 my-4'>
+            <div className='w-full flex items-center justify-between py-2 px-6 md:px-8 my-4'>
                 {user
                     ? <h1 className="text-base">Welcome, {user.email}</h1>
-                    : <h1 className="text-base">Welcome to Expense Tracker<span className="ml-3 text-xs text-ring italic">(Kindly note this includes mock data)</span></h1>
+                    : <div className="flex flex-col gap-3 sm:flex-row items-center">
+                        <h1 className="text-base">Welcome to Expense Tracker</h1>
+                        <span className="text-xs text-ring italic">(Kindly note this includes mock data)</span>
+                    </div>
 
                 }
-                <div className='mr-8 flex gap-4'>
+                <div className='sm:mr-8 flex gap-4 h-auto'>
                     <button
                         onClick={toggleModal}
-                        className="bg-dark-primary dark:bg-light-primary border rounded-md text-white p-2 text-sm 2xl:text-base"
+                        className="bg-dark-primary dark:bg-light-primary border rounded-md text-white p-2 h-auto text-sm 2xl:text-base"
                     >
                         Add Expense
                     </button>
@@ -94,7 +97,7 @@ export default function DashboardPage() {
                 <BudgetOverview budgeted={budgeted} spent={spent} />
                 <ExpensesAreaChart expenses={expensesData} />
             </div>
-            <div className='grid grid-cols-1 md:grid-cols-2 gap-4 px-4 md:px-8 mb-6'>
+            <div className='grid grid-cols-1 md:grid-cols-2 items-center gap-4 px-4 md:px-8 mb-6'>
                 <ExpenseList />
                 <SpendingChart data={chartData} />
             </div>

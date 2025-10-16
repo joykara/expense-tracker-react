@@ -8,7 +8,7 @@ export default function SpendingChart({ data }: SpendingChartProps) {
     return (
         <div className="w-full h-80" >
             <h2 className="lg:text-lg font-medium mb-2 text-center"> Spending by Category </h2>
-            <ResponsiveContainer >
+            <ResponsiveContainer>
                 <PieChart>
                     <Pie
                         data={data}

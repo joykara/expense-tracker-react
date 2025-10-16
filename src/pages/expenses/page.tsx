@@ -43,7 +43,7 @@ export default function ExpensesPage() {
     return (
         <div className="flex flex-col min-h-screen text-foreground">
             <Navbar />
-            <div className="flex items-center gap-3 md:px-8 mt-2 text-sm hover:text-light-primary cursor-pointer" onClick={() => window.history.back()}>
+            <div className="flex items-center gap-3 px-6 md:px-8 mt-2 text-sm hover:text-light-primary cursor-pointer" onClick={() => window.history.back()}>
                 <ArrowLeft className="w-4 h-4" /> Back to Dashboard
             </div>
             <div className="space-y-8 p-6">

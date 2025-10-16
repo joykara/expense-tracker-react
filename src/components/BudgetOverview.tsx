@@ -32,9 +32,9 @@ export default function BudgetOverview({ budgeted, spent }: BudgetOverviewProps)
                 </div>
                 <div className="w-full bg-gray-200 h-3 rounded-full overflow-hidden">
                     <div
-                        className={`h-full rounded-full KES {percent > 80 ? "bg-red-500" : percent > 50 ? "bg-yellow-400" : "bg-green-500"
+                        className={`h-full rounded-full ${percent > 80 ? "bg-red-500" : percent > 50 ? "bg-yellow-400" : "bg-green-500"
                             }`}
-                        style={{ width: `KES {percent}%` }}
+                        style={{ width: `${percent}%` }}
                     />
                 </div>
                 <p className="text-sm text-gray-500 text-center">{percent.toFixed(1)}% of budget used</p>

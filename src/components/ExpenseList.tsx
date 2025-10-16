@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router";
 import { useCategories, useExpenses } from "../hooks/useExpenses";
 import type { Category, Expense } from "../lib/types";
 import { mockCategories, mockExpenses } from "../lib/utils";
@@ -9,7 +10,6 @@ function groupByDate(expenses: Expense[]) {
     }, {} as Record<string, Expense[]>);
 }
 
-// Date format helper
 function formatDate(dateStr: string) {
     // Date and day format helper
     const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' };
@@ -18,6 +18,7 @@ function formatDate(dateStr: string) {
 }
 
 export default function ExpenseList() {
+    const navigate = useNavigate();
     const { data: actualCategories } = useCategories();
     const { data: actualExpenses } = useExpenses();
 
@@ -30,31 +31,40 @@ export default function ExpenseList() {
     }
 
     const grouped = groupByDate(expenses);
+    console.log('grouped', grouped);
 
     return (
-        <div className="space-y-8">
-            {Object.entries(grouped).map(([date, dayExpenses]) => (
-                <div key={date}>
-                    <div className="bg-muted px-4 py-2 rounded font-semibold text-sm mb-2">{formatDate(date)}</div>
-                    <div className="space-y-2 bg-primary-foreground border-l-2 border-bright/50 ml-4">
-                        {dayExpenses.map((exp) => {
-                            const category = getCategoryById(exp.category_id);
-                            return (
-                                <div key={exp.id} className="flex items-center gap-4 p-3 pl-4 hover:bg-bright/10 rounded-r cursor-pointer">
-                                    <span
-                                        className="inline-block rounded px-2 py-1 text-sm"
-                                        style={{ color: category?.color, border: `1px solid ${category?.color}`, borderRadius: '6px' }}
-                                    >
-                                        {category?.name}
-                                    </span>
-                                    <span className="flex-1">{exp.description}</span>
-                                    <span className="font-bold text-primary">KES {exp.amount}</span>
-                                </div>
-                            );
-                        })}
+        <div>
+            <div className="flex items-center justify-between">
+                <h2 className="text-lg font-semibold">Recent Expenses</h2>
+                <button className="text-sm text-primary hover:underline" onClick={() => navigate('/expenses')}>
+                    View All
+                </button>
+            </div>
+            <div className="space-y-8">
+                {Object.entries(grouped).slice(0,4).map(([date, dayExpenses]) => (
+                    <div key={date}>
+                        <div className="bg-muted px-4 py-2 rounded font-semibold text-sm mb-2">{formatDate(date)}</div>
+                        <div className="space-y-2 bg-primary-foreground border-l-2 border-bright/50 ml-4">
+                            {dayExpenses.map((exp) => {
+                                const category = getCategoryById(exp.category_id);
+                                return (
+                                    <div key={exp.id} className="flex items-center gap-4 p-3 pl-4 hover:bg-bright/10 rounded-r cursor-pointer">
+                                        <span
+                                            className="inline-block rounded px-2 py-1 text-sm"
+                                            style={{ color: category?.color, border: `1px solid ${category?.color}`, borderRadius: '6px' }}
+                                        >
+                                            {category?.name}
+                                        </span>
+                                        <span className="flex-1">{exp.description}</span>
+                                        <span className="font-bold text-primary">KES {exp.amount}</span>
+                                    </div>
+                                );
+                            })}
+                        </div>
                     </div>
-                </div>
-            ))}
+                ))}
+            </div>
         </div>
     );
 }

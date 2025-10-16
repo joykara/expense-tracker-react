@@ -31,7 +31,6 @@ export default function ExpenseList() {
     }
 
     const grouped = groupByDate(expenses);
-    console.log('grouped', grouped);
 
     return (
         <div>

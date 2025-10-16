@@ -26,16 +26,14 @@ export default function DashboardPage() {
     const [budgeted, setBudgeted] = useState(0);
     const [spent, setSpent] = useState(0);
     const [chartData, setChartData] = useState<ChartData[]>([]);
-    const expensesData = expenses || mockExpenses;
-    const categories = actualCategories || mockCategories;
+    const expensesData = (expenses && expenses.length > 0) ? expenses : mockExpenses;
+    const categories = (actualCategories && actualCategories.length > 0) ? actualCategories : mockCategories;
 
     const toggleModal = () => {
         setIsOpen(!isOpen);
     }
 
     useEffect(() => {
-        if (!user) return;
-
         const fetchData = async () => {
             const totalBudget = Number(budgets?.[0]?.total ?? 0);
             setBudgeted(totalBudget);
@@ -78,8 +76,10 @@ export default function DashboardPage() {
         <div className="flex flex-col min-h-screen text-foreground">
             <Navbar />
             <div className='w-full flex items-center justify-between py-2 px-4 md:px-8 my-4'>
-                {user ? <h1 className="text-base">Welcome, {user.email}</h1>
-                    : <h1 className="text-base">Welcome to Expense Tracker</h1>
+                {user
+                    ? <h1 className="text-base">Welcome, {user.email}</h1>
+                    : <h1 className="text-base">Welcome to Expense Tracker<span className="ml-3 text-xs text-ring italic">(Kindly note this includes mock data)</span></h1>
+
                 }
                 <div className='mr-8 flex gap-4'>
                     <button

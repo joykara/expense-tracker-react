@@ -12,6 +12,7 @@ import ModeToggle from "../mode-toggle" // your theme switcher
 import { supabase } from "../../supabaseClient"
 import { useAuth } from "../../context/AuthContext"
 import { useNavigate } from "react-router"
+import { useQueryClient } from "@tanstack/react-query"
 
 interface Profile {
     id: string
@@ -23,6 +24,7 @@ export function Navbar() {
     const { user, signOut } = useAuth();
     const navigate = useNavigate();
     const [profile, setProfile] = useState<Profile | null>(null)
+    const queryClient = useQueryClient()
 
     useEffect(() => {
         const getProfile = async () => {
@@ -46,15 +48,13 @@ export function Navbar() {
 
     return (
         <header className="flex items-center justify-between px-6 py-4 shadow-sm bg-primary-foreground/40 dark:border-white border-b/70">
-            {/* Left side */}
             <div className="text-xl font-serif font-semibold">Expense Tracker</div>
 
-            {/* Right side */}
             <div className="flex items-center gap-4">
                 {/* Theme switcher */}
                 <ModeToggle />
 
-                {/* User avatar + dropdown */}
+                {/* Profile dropdown */}
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                         <Avatar className="cursor-pointer">
@@ -69,12 +69,17 @@ export function Navbar() {
                             {profile?.full_name || user?.email || "Anonymous"}
                         </DropdownMenuLabel>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem onClick={()=> navigate('/expenses')}>Expenses</DropdownMenuItem>
-                        {user ?(<DropdownMenuItem onClick={signOut}>
-                            Logout
-                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => navigate('/expenses')}>Expenses</DropdownMenuItem>
+                        {user ? (
+                            <DropdownMenuItem onClick={async () => {
+                                queryClient.clear();
+                                await signOut();
+                                navigate("/login");
+                            }}>
+                                Logout
+                            </DropdownMenuItem>
                         ) : (
-                            <DropdownMenuItem onClick={()=> navigate('/login')}>
+                            <DropdownMenuItem onClick={() => navigate('/login')}>
                                 Login
                             </DropdownMenuItem>
                         )}

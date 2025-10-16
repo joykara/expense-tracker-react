@@ -1,4 +1,4 @@
-import { StepBack } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { Navbar } from "../../components/shared/Navbar";
 import { useCategories, useExpenses } from "../../hooks/useExpenses";
 import type { Category, Expense } from "../../lib/types";
@@ -34,19 +34,17 @@ export default function ExpensesPage() {
     const endIndex = startIndex + itemsPerPage;
     const currentExpenses = expenses.slice(startIndex, endIndex);
 
+    const grouped = groupByDate(currentExpenses);
 
     if (!expenses || expenses.length === 0) {
         return <p>Track your first expense</p>;
     }
 
-    const grouped = groupByDate(currentExpenses);
-    console.log('grouped', grouped);
-
     return (
         <div className="flex flex-col min-h-screen text-foreground">
             <Navbar />
             <div className="flex items-center gap-3 md:px-8 mt-2 text-sm hover:text-light-primary cursor-pointer" onClick={() => window.history.back()}>
-                <StepBack className="w-4 h-4" /> Back to Dashboard
+                <ArrowLeft className="w-4 h-4" /> Back to Dashboard
             </div>
             <div className="space-y-8 p-6">
                 {Object.entries(grouped).map(([date, dayExpenses]) => (

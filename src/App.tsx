@@ -6,6 +6,7 @@ import DashboardPage from './pages/dashboard/page'
 import SignUpPage from './pages/signup/page'
 import { Toaster } from 'react-hot-toast'
 import AuthCallbackPage from './pages/callback/page'
+import ExpensesPage from './pages/expenses/page'
 
 function PrivateRoute({ children }: { children: JSX.Element }) {
   return children;
@@ -25,6 +26,9 @@ export default function App() {
                 <DashboardPage />
               </PrivateRoute>
             }
+          />
+          <Route path='/expenses'
+            element={<ExpensesPage />}
           />
           <Route path="*" element={<Navigate to="/login" />} />
           <Route path="/signup" element={<SignUpPage />} />

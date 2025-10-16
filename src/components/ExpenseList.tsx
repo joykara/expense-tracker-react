@@ -35,8 +35,8 @@ export default function ExpenseList() {
 
     return (
         <div>
-            <div className="flex items-center justify-between">
-                <h2 className="text-lg font-semibold">Recent Expenses</h2>
+            <div className="flex items-center justify-between mb-1">
+                <h2 className="lg:text-lg font-medium">Recent Expenses</h2>
                 <button className="text-sm text-primary hover:underline" onClick={() => navigate('/expenses')}>
                     View All
                 </button>

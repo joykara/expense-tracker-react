@@ -45,7 +45,7 @@ export function Navbar() {
     }, [])
 
     return (
-        <header className="flex items-center justify-between px-6 py-4 shadow-sm bg-primary-foreground/30 dark:border-white border-b/70">
+        <header className="flex items-center justify-between px-6 py-4 shadow-sm bg-primary-foreground/40 dark:border-white border-b/70">
             {/* Left side */}
             <div className="text-xl font-serif font-semibold">Expense Tracker</div>
 

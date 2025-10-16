@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
     Area,
     AreaChart,
@@ -121,9 +120,8 @@ export default function ExpensesAreaChart({ expenses }: Props) {
                                         borderRadius: "8px",
                                         border: "1px solid #e5e7eb",
                                     }}
-                                    formatter={(value, props: any) => [
-                                        `KES ${value}`,
-                                        props.payload.name, // category name
+                                    formatter={(value) => [
+                                        `KES ${value}`
                                     ]}
                                 />
                                 <Area

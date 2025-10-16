@@ -5,6 +5,7 @@ import { useAuth } from "../context/AuthContext";
 import { Button } from "./ui/button";
 import { useForm } from "react-hook-form";
 import { supabase } from "../supabaseClient";
+import { Navigate } from "react-router";
 
 type BudgetForm = {
     month: string;
@@ -71,6 +72,9 @@ export default function CreateBudgetModal() {
         }
     };
 
+    if (open && !user) {
+        return <Navigate to="/login" replace />;
+    }
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>

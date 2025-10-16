@@ -69,7 +69,7 @@ export function Navbar() {
                             {profile?.full_name || user?.email || "Anonymous"}
                         </DropdownMenuLabel>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem>Settings</DropdownMenuItem>
+                        <DropdownMenuItem onClick={()=> navigate('/expenses')}>Expenses</DropdownMenuItem>
                         {user ?(<DropdownMenuItem onClick={signOut}>
                             Logout
                         </DropdownMenuItem>

@@ -1,6 +1,6 @@
 # Expense Tracker App
 
-A full-stack Expense Tracker built with **React.js, Supabase, Tailwind CSS and Recharts**.
+A full-stack Expense Tracker built with **React.js, Supabase, Tailwind CSS, Shadcn UI and Recharts**.
 Tracks expenses, groups by category/date, supports Supabase Auth (email + Google), and includes charts and pagination.
 
 ## 🚀 Features

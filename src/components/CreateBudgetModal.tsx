@@ -6,6 +6,7 @@ import { Button } from "./ui/button";
 import { useForm } from "react-hook-form";
 import { supabase } from "../supabaseClient";
 import { Navigate } from "react-router";
+import { useQueryClient } from "@tanstack/react-query";
 
 type BudgetForm = {
     month: string;
@@ -17,6 +18,7 @@ export default function CreateBudgetModal() {
     const [existingBudget, setExistingBudget] = useState<number | null>(null);
     const { register, handleSubmit, reset, setValue } = useForm<BudgetForm>();
     const { user } = useAuth();
+    const queryClient = useQueryClient();
 
     useEffect(() => {
         if (!user) return;
@@ -66,6 +68,9 @@ export default function CreateBudgetModal() {
             }
 
             reset();
+            setOpen(false);
+            // refetch budgets
+            queryClient.invalidateQueries({ queryKey: ['budgets'] });
         } catch (error) {
             console.error(error);
             toast.error("Error saving budget.");

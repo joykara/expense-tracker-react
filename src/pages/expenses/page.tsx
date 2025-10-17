@@ -3,7 +3,8 @@ import { Navbar } from "../../components/shared/Navbar";
 import { useCategories, useExpenses } from "../../hooks/useExpenses";
 import type { Category, Expense } from "../../lib/types";
 import { mockCategories, mockExpenses } from "../../lib/utils";
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import { useAuth } from "../../context/AuthContext";
 
 function groupByDate(expenses: Expense[]) {
     return expenses.reduce((acc, exp) => {
@@ -21,11 +22,23 @@ function formatDate(dateStr: string) {
 }
 
 export default function ExpensesPage() {
-    const { data: actualCategories } = useCategories();
+    const { user } = useAuth();
     const { data: actualExpenses } = useExpenses();
-    const expenses = actualExpenses && actualExpenses.length > 0 ? actualExpenses : mockExpenses;
-    const categories = actualCategories && actualCategories.length > 0 ? actualCategories : mockCategories;
-    const getCategoryById = (id: string | null) => categories?.find((cat: Category) => cat.id === id);
+    const { data: actualCategories } = useCategories();
+
+    const expenses = useMemo(() => {
+        if (user) {
+            return actualExpenses && actualExpenses.length > 0 ? actualExpenses : [];
+        }
+        return mockExpenses;
+    }, [user, actualExpenses]);
+
+    const categories = useMemo(() => {
+        if (user) {
+            return actualCategories && actualCategories.length > 0 ? actualCategories : [];
+        }
+        return mockCategories;
+    }, [user, actualCategories]);
 
     const [currentPage, setCurrentPage] = useState(1)
     const itemsPerPage = 10;
@@ -33,8 +46,9 @@ export default function ExpensesPage() {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
     const currentExpenses = expenses.slice(startIndex, endIndex);
-
     const grouped = groupByDate(currentExpenses);
+
+    const getCategoryById = (id: string | null) => categories?.find((cat: Category) => cat.id === id);
 
     if (!expenses || expenses.length === 0) {
         return <p>Track your first expense</p>;
@@ -70,7 +84,12 @@ export default function ExpensesPage() {
                     </div>
                 ))}
             </div>
-            <div className="flex justify-center items-center gap-2 mt-6">
+            {expenses && expenses.length === 0 && (
+                <div className="flex justify-center items-center h-20 bg-primary-foreground gap-2 my-6">
+                    <p>Create your first expense ...</p>
+                </div>
+            )}
+            <div className="flex justify-center items-center gap-2 my-6">
                 <button
                     className="px-3 py-1 rounded bg-muted text-foreground disabled:opacity-50"
                     onClick={() => setCurrentPage(p => Math.max(1, p - 1))}

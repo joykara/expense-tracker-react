@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import ExpenseForm from '../../components/AddExpenseForm';
 import ExpenseList from '../../components/ExpenseList';
 import { Navbar } from '../../components/shared/Navbar';
@@ -19,15 +19,27 @@ interface ChartData {
 export default function DashboardPage() {
     const { user } = useAuth();
     const [isOpen, setIsOpen] = useState<boolean>(false);
-    const { data: expenses } = useExpenses();
-    const { data: actualCategories } = useCategories();
-    const { data: budgets } = useBudgets();
-
     const [budgeted, setBudgeted] = useState(0);
     const [spent, setSpent] = useState(0);
     const [chartData, setChartData] = useState<ChartData[]>([]);
-    const expensesData = (expenses && expenses.length > 0) ? expenses : mockExpenses;
-    const categories = (actualCategories && actualCategories.length > 0) ? actualCategories : mockCategories;
+    const { data: expenses } = useExpenses();
+    const { data: actualCategories } = useCategories();
+    const { data: budgets } = useBudgets();
+    // console.log('Budgets data:', budgets);
+
+    const expensesData = useMemo(() => {
+        if (user) {
+            return expenses && expenses.length > 0 ? expenses : [];
+        }
+        return mockExpenses;
+    }, [user, expenses]);
+
+    const categories = useMemo(() => {
+        if (user) {
+            return actualCategories && actualCategories.length > 0 ? actualCategories : [];
+        }
+        return mockCategories;
+    }, [user, actualCategories]);
 
     const toggleModal = () => {
         setIsOpen(!isOpen);
@@ -35,7 +47,7 @@ export default function DashboardPage() {
 
     useEffect(() => {
         const fetchData = async () => {
-            const totalBudget = Number(budgets?.[0]?.total ?? 0);
+            const totalBudget = Number(budgets?.[0]?.total ?? 10000);
             setBudgeted(totalBudget);
 
             const totalSpent = expensesData.reduce((sum, e) => sum + Number(e.amount), 0);
@@ -57,6 +69,7 @@ export default function DashboardPage() {
             }, []);
 
             // Merge category name + color
+            console.log('Categories:', categories, 'Grouped Data:', grouped);
             const merged = grouped.map((g) => {
                 const category = categories?.find((c) => c.id === g.name);
                 return {
@@ -98,7 +111,7 @@ export default function DashboardPage() {
                 <ExpensesAreaChart expenses={expensesData} />
             </div>
             <div className='grid grid-cols-1 md:grid-cols-2 items-center gap-4 px-4 md:px-8 mb-6'>
-                <ExpenseList />
+                <ExpenseList expenses={expensesData} categories={categories} />
                 <SpendingChart data={chartData} />
             </div>
 

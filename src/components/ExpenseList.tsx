@@ -1,10 +1,8 @@
 import { useNavigate } from "react-router";
-import { useCategories, useExpenses } from "../hooks/useExpenses";
 import type { Category, Expense } from "../lib/types";
-import { mockCategories, mockExpenses } from "../lib/utils";
 
-function groupByDate(expenses: Expense[]) {
-    return expenses.reduce((acc, exp) => {
+function groupByDate(actualExpenses: Expense[]) {
+    return actualExpenses.reduce((acc, exp) => {
         (acc[exp.date] = acc[exp.date] || []).push(exp);
         return acc;
     }, {} as Record<string, Expense[]>);
@@ -17,17 +15,23 @@ function formatDate(dateStr: string) {
     return date.toLocaleDateString(undefined, options);
 }
 
-export default function ExpenseList() {
+export default function ExpenseList({ expenses, categories }: { expenses: Expense[], categories: Category[] }) {
     const navigate = useNavigate();
-    const { data: actualCategories } = useCategories();
-    const { data: actualExpenses } = useExpenses();
-
-    const expenses = actualExpenses && actualExpenses.length > 0 ? actualExpenses : mockExpenses;
-    const categories = actualCategories && actualCategories.length > 0 ? actualCategories : mockCategories;
     const getCategoryById = (id: string | null) => categories?.find((cat: Category) => cat.id === id);
 
     if (!expenses || expenses.length === 0) {
-        return <p>Track your first expense</p>;
+        return (
+
+            <div className="h-80">
+                <div className="flex items-center justify-between mb-1">
+                    <h2 className="lg:text-lg font-medium">Recent Expenses</h2>
+                </div>
+                {/* skeleton with text */}
+                <div className="space-y-2 h-20 flex flex-col justify-center items-center bg-primary-foreground border-l-2 border-bright/50 ml-4">
+                    <p className="text-xs italic">Add your budget and create your first expense...</p>
+                </div>
+            </div>
+        )
     }
 
     const grouped = groupByDate(expenses);
@@ -41,7 +45,7 @@ export default function ExpenseList() {
                 </button>
             </div>
             <div className="space-y-8">
-                {Object.entries(grouped).slice(0,4).map(([date, dayExpenses]) => (
+                {Object.entries(grouped).slice(0, 4).map(([date, dayExpenses]) => (
                     <div key={date}>
                         <div className="bg-muted px-4 py-2 rounded font-semibold text-sm mb-2">{formatDate(date)}</div>
                         <div className="space-y-2 bg-primary-foreground border-l-2 border-bright/50 ml-4">
